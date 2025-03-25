@@ -8,7 +8,7 @@ function Home() {
    
     useEffect(() => {
         const loadDefaultMovies = async () => {
-            const defaultMovies = await fetchMovies("sex"); 
+            const defaultMovies = await fetchMovies("marvel"); 
             setMovies(defaultMovies);
         };
         loadDefaultMovies();
