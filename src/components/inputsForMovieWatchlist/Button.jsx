@@ -13,7 +13,7 @@ const Button = forwardRef(({ label, type = "submit", className = "", children, .
         type={type}
         id={id}
         ref={ref}
-        className={`px-3 py-2 rounded-lg bg-blue text-black outline-none ${className}`}
+        className={`px-3 py-2 rounded-lg text-black outline-none ${className}`}
         {...props}
       >
         {children}
