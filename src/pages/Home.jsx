@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { fetchMovies } from "../utils/api";
 import { Button, Input } from "../index";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   const [searchMovie, setSearchMovie] = useState("");
   const [movies, setMovies] = useState([]);
 
@@ -38,6 +40,8 @@ function Home() {
         >
           Search
         </Button>
+
+        <Button onClick={()=>navigate("/watchlist")} className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg text-white font-semibold transition-transform transform hover:scale-105">Go to your Watchlist</Button>
       </div>
 
       {/* 🎥 Movie List */}
