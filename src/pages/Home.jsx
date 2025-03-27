@@ -41,7 +41,8 @@ function Home() {
           Search
         </Button>
 
-        <Button onClick={()=>navigate("/watchlist")} className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg text-white font-semibold transition-transform transform hover:scale-105">Go to your Watchlist</Button>
+        <Button onClick={()=>navigate("/watchlist")} className="bg-green-600 hover:bg-green-700 px-6 py-1 rounded-lg">Go to your Watchlist</Button>
+      
       </div>
 
       {/* 🎥 Movie List */}

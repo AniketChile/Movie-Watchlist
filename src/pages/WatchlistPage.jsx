@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 import {Button} from '../index'
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function WatchlistPage(props) {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ function WatchlistPage(props) {
     return (
        <>
             <h2>My Watchlist</h2>
-            {/* <Button onClick={()=>navigate("")} className="bg-blue-600 mt-3 w-full py-2 rounded-lg">Home</Button> */}
+            <NavLink to="/"><Button className="bg-red-600 mt-3 py-2 rounded-lg">Home</Button></NavLink>
             {watchlist.length ===0 ? (<p>You have no movies in your watchlist</p>) : (
                 <div>
                     {watchlist.map((movie)=>(
