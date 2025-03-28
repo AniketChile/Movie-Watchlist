@@ -2,15 +2,39 @@ import React, { useState, useEffect } from "react";
 import { fetchMovies } from "../utils/api";
 import { Button, Input } from "../index";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToWatchlist } from "../redux/watchlistSlice";
 
 function Home() {
-  const navigate = useNavigate();
+  /*
+      const navigate = useNavigate();
   const [searchMovie, setSearchMovie] = useState("");
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     const loadDefaultMovies = async () => {
       const defaultMovies = await fetchMovies("sex"); 
+      setMovies(defaultMovies);
+    };
+    loadDefaultMovies();
+  }, []);
+
+  const handleSearch = async () => {
+    if (!searchMovie.trim()) return;
+    const results = await fetchMovies(searchMovie);
+    setMovies(results);
+    setSearchMovie("");
+  };
+  */
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [searchMovie, setSearchMovie] = useState("");
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const loadDefaultMovies = async () => {
+      const defaultMovies = await fetchMovies("sex");
       setMovies(defaultMovies);
     };
     loadDefaultMovies();
@@ -41,11 +65,15 @@ function Home() {
           Search
         </Button>
 
-        <Button onClick={()=>navigate("/watchlist")} className="bg-green-600 hover:bg-green-700 px-6 py-1 rounded-lg">Go to your Watchlist</Button>
-      
+        <Button
+          onClick={() => navigate("/watchlist")}
+          className="bg-green-600 hover:bg-green-700 px-6 py-1 rounded-lg"
+        >
+          Go to your Watchlist
+        </Button>
       </div>
 
-      {/* 🎥 Movie List */}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {movies.length === 0 ? (
           <p className="text-xl font-semibold">⚠️ No Movies Found</p>
@@ -60,8 +88,10 @@ function Home() {
                 alt={movie.Title}
                 className="w-full h-80 object-cover rounded-lg mb-3"
               />
-              <h3 className="text-sm font-bold">{movie.Title} ({movie.Year})</h3>
-              <Button className="bg-green-600 hover:bg-green-700 mt-3 w-full py-2 rounded-lg">
+              <h3 className="text-sm font-bold">
+                {movie.Title} ({movie.Year})
+              </h3>
+              <Button className="bg-green-600 hover:bg-green-700 mt-3 w-full py-2 rounded-lg" onClick={()=>dispatch(addToWatchlist(movie))}>
                 Add to Watchlist
               </Button>
             </div>
