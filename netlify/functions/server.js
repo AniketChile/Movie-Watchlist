@@ -1,4 +1,5 @@
 import express from "express";
+import serverless from "serverless-http";
 import cors from "cors";
 import axios from "axios";
 
@@ -7,11 +8,11 @@ app.use(cors());
 app.use(express.json());
 
 const API_KEY = "dcdc35f"; 
-let watchlist = []; 
+let watchlist = [];
 
 app.get("/api/movies", async (req, res) => {
     try {
-        const { s } = req.query; 
+        const { s } = req.query;
         if (!s) {
             return res.status(400).json({ error: "Search query (s) is required" });
         }
@@ -27,7 +28,7 @@ app.get("/api/movies", async (req, res) => {
     }
 });
 
-// **Watchlist API**
+
 app.get("/api/watchlist", (req, res) => {
     res.json(watchlist);
 });
@@ -53,5 +54,5 @@ app.delete("/api/watchlist/:id", (req, res) => {
     res.json({ message: "Removed from watchlist", watchlist });
 });
 
-const PORT = 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+export const handler = serverless(app);
