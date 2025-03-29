@@ -34,7 +34,7 @@ function Home() {
 
   useEffect(() => {
     const loadDefaultMovies = async () => {
-      const defaultMovies = await fetchMovies("sex");
+      const defaultMovies = await fetchMovies("marvel");
       setMovies(defaultMovies);
     };
     loadDefaultMovies();
@@ -56,7 +56,7 @@ function Home() {
           onChange={(e) => setSearchMovie(e.target.value)}
           type="text"
           className="w-full p-3 rounded-lg border border-gray-600 bg-gray-800 text-white focus:ring-2 focus:ring-blue-500"
-          placeholder="Search for a movie..."
+          placeholder=" Search for a movie..."
         />
         <Button
           onClick={handleSearch}
@@ -67,9 +67,9 @@ function Home() {
 
         <Button
           onClick={() => navigate("/watchlist")}
-          className="bg-green-600 hover:bg-green-700 px-6 py-1 rounded-lg"
+          className="bg-green-600 ml-4 hover:bg-green-700 px-4 py-3 rounded-lg text-white font-semibold transition-transform transform hover:scale-105"
         >
-          Go to your Watchlist
+         Your Watchlist
         </Button>
       </div>
 
