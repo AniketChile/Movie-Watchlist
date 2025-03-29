@@ -10,7 +10,10 @@ app.use(express.json());
 const API_KEY = "dcdc35f"; 
 let watchlist = [];
 
-app.get("/api/movies", async (req, res) => {
+// ✅ Correct API Route (Netlify functions require this structure)
+const router = express.Router();
+
+router.get("/movies", async (req, res) => {
     try {
         const { s } = req.query;
         if (!s) {
@@ -28,12 +31,11 @@ app.get("/api/movies", async (req, res) => {
     }
 });
 
-
-app.get("/api/watchlist", (req, res) => {
+router.get("/watchlist", (req, res) => {
     res.json(watchlist);
 });
 
-app.post("/api/watchlist", (req, res) => {
+router.post("/watchlist", (req, res) => {
     const movie = req.body;
     if (!movie || !movie.imdbID) {
         return res.status(400).json({ error: "Invalid movie data" });
@@ -48,11 +50,14 @@ app.post("/api/watchlist", (req, res) => {
     res.status(409).json({ message: "Movie already in watchlist" });
 });
 
-app.delete("/api/watchlist/:id", (req, res) => {
+router.delete("/watchlist/:id", (req, res) => {
     const { id } = req.params;
     watchlist = watchlist.filter((movie) => movie.imdbID !== id);
     res.json({ message: "Removed from watchlist", watchlist });
 });
 
+// ✅ Attach the router
+app.use("/.netlify/functions/server", router);
 
+// ✅ Export the function for Netlify
 export const handler = serverless(app);
