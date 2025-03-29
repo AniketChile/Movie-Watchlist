@@ -69,10 +69,9 @@ function Home() {
           onClick={() => navigate("/watchlist")}
           className="bg-green-600 ml-4 hover:bg-green-700 px-4 py-3 rounded-lg text-white font-semibold transition-transform transform hover:scale-105"
         >
-         Your Watchlist
+          Your Watchlist
         </Button>
       </div>
-
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {movies.length === 0 ? (
@@ -91,7 +90,10 @@ function Home() {
               <h3 className="text-sm font-bold">
                 {movie.Title} ({movie.Year})
               </h3>
-              <Button className="bg-green-600 hover:bg-green-700 mt-3 w-full py-2 rounded-lg" onClick={()=>dispatch(addToWatchlist(movie))}>
+              <Button
+                className="bg-green-600 hover:bg-green-700 active:bg-green-800 cursor-pointer mt-3 w-full py-2 rounded-lg"
+                onClick={() => dispatch(addToWatchlist(movie))}
+              >
                 Add to Watchlist
               </Button>
             </div>
