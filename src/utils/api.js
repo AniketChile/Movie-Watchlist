@@ -1,13 +1,13 @@
-const API_KEY = "dcdc35f";
+const API_URL = "http://localhost:5000/api/movies";
 
 export const fetchMovies = async (searchQuery = "Avengers") => { 
     try {
-        const response = await fetch(`http://www.omdbapi.com/?s=${searchQuery}&apikey=${API_KEY}`);
+        const response = await fetch(`${API_URL}?s=${searchQuery}`);
+        if (!response.ok) throw new Error("Failed to fetch movies");
         const data = await response.json();
-       // http://www.omdbapi.com/?s="Avengers"&apikey="dcdc35f"
-        return data.Search || []; // ✅ Always return an array of movies
+        return data.Search || [];
     } catch (error) {
-        console.log("API error:", error);
+        console.error("API error:", error);
         return [];
     }
 };
