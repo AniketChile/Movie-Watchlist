@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "https://moviewatchlistpro5.netlify.app/.netlify/functions/server/movies";
 
 export const fetchMovies = async (searchQuery = "Avengers") => { 
     try {
