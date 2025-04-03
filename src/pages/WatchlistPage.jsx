@@ -1,28 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../index";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { addToWatchlist, removeFromWatchlist } from "../redux/watchlistSlice";
 
+const API_URL = "https://moviewatchlistpro5.netlify.app/.netlify/functions/server/watchlist";
+
 function WatchlistPage() {
   const watchlist = useSelector((state) => state.watchlist.movies);
   const dispatch = useDispatch();
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/watchlist")
-      .then((response) => {
-        response.data.forEach(movie => {
-          dispatch(addToWatchlist(movie));
-        });
-      })
-      .catch((error) => console.error("Error fetching watchlist:", error));
+    const fetchWatchlist = async () => {
+      try {
+        const response = await axios.get(API_URL);
+        setMovies(response.data);
+        response.data.forEach((movie) => dispatch(addToWatchlist(movie)));
+      } catch (error) {
+        console.error("Error fetching watchlist:", error);
+      }
+    };
+    fetchWatchlist();
   }, [dispatch]);
 
   const handleRemove = async (movieId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/watchlist/${movieId}`);
+      await axios.delete(`${API_URL}/${movieId}`);
       dispatch(removeFromWatchlist({ imdbID: movieId }));
+      setMovies((prevMovies) => prevMovies.filter((movie) => movie.imdbID !== movieId));
     } catch (error) {
       console.error("Error removing movie:", error);
     }
@@ -34,7 +41,7 @@ function WatchlistPage() {
       <NavLink to="/">
         <Button className="bg-green-600 mt-3 py-2 rounded-lg">Home</Button>
       </NavLink>
-
+      
       {watchlist.length === 0 ? (
         <p className="text-xl font-semibold mt-4">You have no movies in your watchlist.</p>
       ) : (
